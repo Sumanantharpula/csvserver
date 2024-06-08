@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  csvserver:
+    image: infracloudio/csvserver:latest
+    container_name: csvserver
+    ports:
+      - "9393:9300"
+    env_file:
+      - csvserver.env
+    volumes:
+      - ./gencsv.sh:/usr/local/bin/gencsv.sh:rw  # Mount the script in read-only mode
+      - ./inputFile:/csvserver/inputdata
+    entrypoint: >
+      /bin/bash -c "
+      chmod +x /usr/local/bin/gencsv.sh &&
+      /usr/local/bin/gencsv.sh 2 8 &&
+      exec /csvserver/csvserver"
+volumes:
+  inputFile:
