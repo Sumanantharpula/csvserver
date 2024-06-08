@@ -1,0 +1,15 @@
+  git clone https://github.com/infracloudio/csvserver.git     #clone the repo
+  cd csvserver/
+  vi gencsv.sh                                               # write the script as per requirement
+  chmod +x gencsv.sh                                         # Give Executable permissions
+  ./gencsv.sh 2 8                                            # Run the shell script, pass the two arguements
+  
+  cat inputFile                                              # shell script should create this file and The output of the shell script stored in this file.
+  apt  install docker.io                                     # Install Docker
+  systemctl enable docker                                    # To run even after the terminal gets restarted
+  docker pull infracloudio/csvserver:latest                  # To pull the docker image
+  docker images                                              # To verify the docker image
+  docker run -d --name csvserver -p 9393:9300 -e CSVSERVER_BORDER=Orange -v "$(pwd)/inputFile:/csvserver/inputdata" infracloudio/csvserver:latest
+  docker ps -a                                               # To verify the containers
+  curl -o ./part-1-output http://localhost:9393/raw          # To verify
+  docker logs 1ae25e234cb6 >& part-1-logs                    # To get conatainer logs
