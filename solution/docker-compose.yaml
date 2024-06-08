@@ -16,5 +16,14 @@ services:
       chmod +x /usr/local/bin/gencsv.sh &&
       /usr/local/bin/gencsv.sh 2 8 &&
       exec /csvserver/csvserver"
+  prometheus:
+    image: prom/prometheus:v2.45.2
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - "--config.file=/etc/prometheus/prometheus.yml"    
 volumes:
   inputFile:
